@@ -2,7 +2,7 @@
 
 Här är mitt React/TypeScript projekt.
 
-1. useContext & useReducer som state-hanterare
+1. useContext & useReducer som state-hanterare <br />
      Något overkill för projektet men tycket att det funkar smidigt när det väl är uppsatt, och jag gillar hur det skapar en god grund för eventuell påbyggnad vilket jag tycker är viktigt
 2. MUI som GUI-bibliotek
      Jag har helt gått bort från att skapa egna GUI-komponenter, inte för att jag inte kan men smidigheten som kommer med det.. Då kan man också lägga mer tid på annat.. ^^
