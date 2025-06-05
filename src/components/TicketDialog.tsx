@@ -5,12 +5,9 @@ import {
   DialogActions,
   Button,
   TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Box,
 } from "@mui/material";
+import { useState } from "react";
 
 interface TicketDialogProps {
   open: boolean;
@@ -19,46 +16,56 @@ interface TicketDialogProps {
 }
 
 function TicketDialog({ open, onClose, onSave }: TicketDialogProps) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
   const handleSave = () => {
     if (onSave) {
       onSave({
-        title: "Ny ticket",
-        description: "Beskrivning",
+        title,
+        description,
         status: "Open",
       });
     }
+    setTitle("");
+    setDescription("");
     onClose();
   };
 
+  const handleClose = () => {
+    setTitle("");
+    setDescription("");
+    onClose();
+  };
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
       <DialogTitle>Skapa ny ticket</DialogTitle>
       <DialogContent>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
-          <TextField label="Titel" fullWidth variant="outlined" />
+          <TextField
+            label="Titel"
+            fullWidth
+            variant="outlined"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
           <TextField
             label="Beskrivning"
             fullWidth
             multiline
             rows={4}
             variant="outlined"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
-          <FormControl fullWidth>
-            <InputLabel>Status</InputLabel>
-            <Select label="Status" defaultValue="Open">
-              <MenuItem value="Open">Open</MenuItem>
-              <MenuItem value="In Progress">In Progress</MenuItem>
-              <MenuItem value="Closed">Closed</MenuItem>
-            </Select>
-          </FormControl>
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="secondary">
+        <Button onClick={handleClose} color="secondary">
           Avbryt
         </Button>
         <Button onClick={handleSave} variant="contained" color="primary">
-          Spara
+          Skapa Ticket
         </Button>
       </DialogActions>
     </Dialog>

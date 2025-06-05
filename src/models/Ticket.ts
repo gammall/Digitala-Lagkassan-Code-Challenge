@@ -19,5 +19,11 @@ export interface TicketContextType {
   state: TicketState;
   actions: {
     fetchTickets: () => Promise<void>;
+    createTicket: (
+      title: string,
+      description: string,
+      status: "Open" | "In Progress" | "Closed"
+    ) => Promise<Ticket>;
+    updateTicket: (ticket: Ticket) => Promise<Ticket>;
   };
 }

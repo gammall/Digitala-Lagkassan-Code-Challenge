@@ -59,6 +59,46 @@ export function TicketProvider({ children }: TicketProviderProps) {
         payload: await tickets.json(),
       });
     },
+    async createTicket(
+      title: string,
+      description: string,
+      status: "Open" | "In Progress" | "Closed" = "Open"
+    ) {
+      const response = await fetch(`${API_BASE_URL}/tickets`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title, description, status }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to create ticket");
+      }
+      const newTicket = await response.json();
+      dispatch({
+        type: TicketActionType.CREATE_TICKET,
+        payload: newTicket,
+      });
+      return newTicket;
+    },
+    async updateTicket(ticket: Ticket) {
+      const response = await fetch(`${API_BASE_URL}/tickets`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(ticket),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update ticket");
+      }
+      const updatedTicket = await response.json();
+      dispatch({
+        type: TicketActionType.UPDATE_TICKET,
+        payload: updatedTicket,
+      });
+      return updatedTicket;
+    },
   };
   return (
     <TicketContext.Provider value={{ state, actions }}>
